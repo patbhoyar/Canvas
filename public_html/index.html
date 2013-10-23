@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+      <style>
+          body{
+              margin: 0;
+              padding: 0;
+          }
+      </style>
+  </head>
+  <body>
+      
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var canvasWidth = 600, canvasHeight = 600;
+
+      var clearScreen = function(){
+          context.fillStyle = 'black';
+          context.fillRect(0,0, 600, 600);
+      };
+
+      var rects = [{ xPos: 300, yPos: 450, width: 100, height: 100, color: 'red', vX: 6, vY: 10, xReverse: 0, yReverse: 0 },
+                   { xPos: 00, yPos: 00, width: 60, height: 60, color: 'yellow', vX: 20, vY: 30, xReverse: 0, yReverse: 0 },
+                   { xPos: 200, yPos: 120, width: 30, height: 30, color: 'blue', vX: 15, vY: 20, xReverse: 0, yReverse: 0 }];
+      
+      context.fillStyle = 'black';
+      context.fillRect(0,0, 600, 600);  
+
+      setInterval(function(){
+
+            window.clearScreen();
+            for (i = 0; i < rects.length; i++) {
+                
+                    if (rects[i].xPos > (window.canvasWidth - rects[i].width)) {
+                        rects[i].xReverse = 1;
+                    }
+                    if (rects[i].yPos > (window.canvasHeight - rects[i].height)) {
+                        rects[i].yReverse = 1;
+                    }
+                    if (rects[i].xPos <= 0) {
+                        rects[i].xReverse = 0;
+                    }
+                    if (rects[i].yPos <= 0) {
+                        rects[i].yReverse = 0;
+                    }
+
+                    if (rects[i].xReverse === 0) {
+                        rects[i].xPos += rects[i].vX;
+                    } else{
+                        rects[i].xPos -= rects[i].vX;
+                    }
+                    if (rects[i].yReverse === 0) {
+                        rects[i].yPos += rects[i].vY;
+                    }else {
+                        rects[i].yPos -= rects[i].vY;
+                    }
+                
+                  context.fillStyle = rects[i].color;
+                  context.fillRect(rects[i].xPos, rects[i].yPos, rects[i].width, rects[i].height);  
+            }
+      }, 60);
+        
+    </script>
+  </body>
+</html>
+      

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+      <style>
+          body{
+              margin: 0;
+              padding: 0;
+          }
+      </style>
+  </head>
+  <body>
+      
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var canvasWidth = 600, canvasHeight = 600;
+
+      var clearScreen = function(){
+          context.fillStyle = 'black';
+          context.fillRect(0,0, 600, 600);
+      };
+
+      var Rectangle = function(){};
+      
+      Rectangle.prototype.constructor = function(color, xC, yC, W, H, vX, vY){
+          this.color = color;
+          this.xPos = xC;
+          this.yPos = yC;
+          this.width = W;
+          this.height = H;
+          this.xReverse = 0;
+          this.yReverse = 0;
+          this.vX = vX;
+          this.vY = vY;
+
+      };
+      
+      Rectangle.prototype.move = function(){
+          
+          var rect = this;
+          
+          setInterval(function(){
+              
+            if (rect.xPos > (window.canvasWidth - rect.width)) {
+                rect.xReverse = 1;
+            }
+            if (rect.yPos > (window.canvasHeight - rect.height)) {
+                rect.yReverse = 1;
+            }
+            if (rect.xPos <= 0) {
+                rect.xReverse = 0;
+            }
+            if (rect.yPos <= 0) {
+                rect.yReverse = 0;
+            }
+
+            if (rect.xReverse === 0) {
+                rect.xPos += rect.vX;
+            } else{
+                rect.xPos -= rect.vX;
+            }
+            if (rect.yReverse === 0) {
+                rect.yPos += rect.vY;
+            }else {
+                rect.yPos -= rect.vY;
+            }
+            
+            window.clearScreen();
+            
+            context.fillStyle = rect.color;
+            context.fillRect(rect.xPos, rect.yPos, rect.width, rect.height);
+            
+            //console.log(rect);
+          }, 30, rect);
+
+      };
+      
+        var rect1 = Object.create(Rectangle.prototype);
+        rect1.constructor('red', 10, 10, 100, 100, 10, 6);
+        
+        var rect2 = Object.create(Rectangle.prototype);
+        rect2.constructor('yellow', 0, 0, 50, 50, 20, 3);
+        
+        rect2.move();        
+        //rect1.move();
+        
+    </script>
+  </body>
+</html>
+      
